@@ -895,17 +895,17 @@ export interface DeflateOptions {
    * Avoid using dictionaries with GZIP and ZIP to maximize software compatibility.
    */
   dictionary?: Uint8Array;
+  /**
+   * When the file was last modified. Defaults to the current time.
+   * Set this to 0 to avoid revealing a modification date entirely.
+   */
+  mtime?: Date | string | number;
 };
 
 /**
  * Options for compressing data into a GZIP format
  */
 export interface GzipOptions extends DeflateOptions {
-  /**
-   * When the file was last modified. Defaults to the current time.
-   * Set this to 0 to avoid revealing a modification date entirely.
-   */
-  mtime?: Date | string | number;
   /**
    * The filename of the data. If the `gunzip` command is used to decompress the data, it will output a file
    * with this name instead of the name of the compressed file.
@@ -2836,6 +2836,7 @@ export class AsyncZipDeflate implements ZipInputFile {
     this.d = new AsyncDeflate(opts, (err, dat, final) => {
       this.ondata(err, dat, final);
     });
+    this.mtime = opts.mtime;
     this.compression = 8;
     this.flag = dbf(opts.level);
     this.terminate = this.d.terminate;

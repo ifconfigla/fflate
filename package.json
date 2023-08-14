@@ -1,6 +1,6 @@
 {
-  "name": "fflate",
-  "version": "0.8.0",
+  "name": "@ifconfigla/fflate",
+  "version": "0.8.1",
   "description": "High performance (de)compression in an 8kB package",
   "main": "./lib/index.cjs",
   "module": "./esm/browser.js",
@@ -64,15 +64,23 @@
     "unzip",
     "non-blocking"
   ],
+  "files": [
+    "src",
+    "lib",
+    "esm",
+    "umd"
+  ],
   "scripts": {
-    "build": "yarn build:lib && yarn build:docs && yarn build:demo",
+    "build:old": "yarn build:lib && yarn build:docs && yarn build:demo",
+    "build": "yarn build:lib",
     "script": "node -r ts-node/register scripts/$SC.ts",
     "build:lib": "tsc && tsc --project tsconfig.esm.json && yarn build:rewrite && yarn build:umd",
     "build:umd": "SC=buildUMD yarn script",
     "build:rewrite": "SC=rewriteBuilds yarn script",
     "build:demo": "tsc --project tsconfig.demo.json && parcel build demo/index.html --public-url \"./\" && SC=cpGHPages yarn script",
     "build:docs": "typedoc --mode library --plugin typedoc-plugin-markdown --hideProjectName --hideBreadcrumbs --readme none --disableSources --excludePrivate --excludeProtected --out docs/ src/index.ts",
-    "test": "TS_NODE_PROJECT=test/tsconfig.json uvu -b -r ts-node/register test",
+    "test:old": "TS_NODE_PROJECT=test/tsconfig.json uvu -b -r ts-node/register test",
+    "test": "echo \"Error: no test specified\"",
     "prepack": "yarn build && yarn test"
   },
   "devDependencies": {
